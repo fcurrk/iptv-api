@@ -18,7 +18,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./output
+          local-dir: output/
           server-dir: /
           exclude: '*'
           include: 'result.m3u,result.txt'
