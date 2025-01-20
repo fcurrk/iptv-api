@@ -11,10 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: List output directory
-        run: ls -la ./
-             ls -la ./output
-
       - name: Upload to FTPServer
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -22,7 +18,5 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: output/
+          local-dir:./output/result.*
           server-dir: /
-          exclude: '*'
-          include: 'result.m3u,result.txt'
