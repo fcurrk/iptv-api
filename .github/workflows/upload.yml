@@ -11,6 +11,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: List output directory
+        run: ls -la ./
+             ls -la ./output
+
       - name: Upload to FTPServer
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
