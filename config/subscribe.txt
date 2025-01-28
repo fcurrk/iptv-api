@@ -1,5 +1,4 @@
 # 这是订阅源列表，每行一个订阅地址
 # This is a list of subscription sources, with one subscription address per line
 https://ghproxy.cc/https://raw.githubusercontent.com/PizazzGY/TV/master/output/user_result.txt
-https://ghproxy.cc/https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u
 http://218.77.104.81:25455/tv.m3u
