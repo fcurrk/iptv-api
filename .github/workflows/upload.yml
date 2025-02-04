@@ -26,7 +26,9 @@ jobs:
       - name: Delete specified files
         run: |
           ls -ls
-          rm -f config/mydemo.txt
+          rm -f ./config/mydemo.txt
+          cd ./output
           ls -ls
-          rm -f output/tv.txt
-          rm -f output/tv.m3u
+          rm -f ./output/tv.txt
+          rm -f ./output/tv.m3u
+          ls -ls
