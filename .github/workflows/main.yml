@@ -64,7 +64,6 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          mkdir -p config
           curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/mydemo.txt -o config/mydemo.txt
       - name: Commit and push if changed
         run: |
