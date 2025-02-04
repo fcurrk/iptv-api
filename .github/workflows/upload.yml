@@ -23,18 +23,28 @@ jobs:
           exclude: |
             *.pkl
             *.log
-      - name: Delete specified files
-        run: |
-            rm -f config/mydemo.txt
-            rm -f output/tv.txt
-            rm -f output/tv.m3u
-            rm -f output/cache.pkl
-            rm -f output/sort.log
       - name: Commit and push if changed
         run: |
+          rm -f config/mydemo.txt
+          rm -f output/tv.txt
+          rm -f output/tv.m3u
+          rm -f output/cache.pkl
+          rm -f output/sort.log
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git diff
+          if [[ -f "output/tv.txt" ]]; then
+            git add -f "output/tv.txt"
+          fi
+          if [[ -f "output/tv.m3u" ]]; then
+            git add -f "output/tv.m3u"
+          fi
+          if [[ -f "output/cache.pkl" ]]; then
+            git add -f "output/cache.pkl"
+          fi
+          if [[ -f "output/sort.log" ]]; then
+            git add -f "output/sort.log"
+          fi
           if ! git diff --staged --quiet; then
             git commit -m "Github Action Auto FTP Updated and Del Files"
             git push --force
