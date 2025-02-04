@@ -23,6 +23,7 @@ jobs:
           exclude: |
             *.pkl
             *.log
+            readme
       - name: Commit and push if changed
         run: |
           rm -f config/mydemo.txt
