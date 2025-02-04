@@ -30,6 +30,5 @@ jobs:
           rm -f output/tv.m3u
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git rm output/tv.txt
           git commit -m "Delete file"
           git push
