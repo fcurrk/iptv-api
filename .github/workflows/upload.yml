@@ -23,3 +23,10 @@ jobs:
           exclude: |
             *.pkl
             *.log
+      - name: Delete specified files
+        run: |
+          ls -ls
+          rm -f config/mydemo.txt
+          ls -ls
+          rm -f output/tv.txt
+          rm -f output/tv.m3u
