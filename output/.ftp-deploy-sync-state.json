@@ -1,0 +1,19 @@
+{
+    "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
+    "version": "1.0.0",
+    "generatedTime": 1738645287430,
+    "data": [
+        {
+            "type": "file",
+            "name": "tv.m3u",
+            "size": 300164,
+            "hash": "a2ced1c7dc771eb130ea46df5e1b122136c3983b9c5ce0305ee0a312076c1610"
+        },
+        {
+            "type": "file",
+            "name": "tv.txt",
+            "size": 93849,
+            "hash": "8fcd77b9be08a89e99618e9d8f1210a4825a5025be9f341579db685b2be2a0a1"
+        }
+    ]
+}
