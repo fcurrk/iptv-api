@@ -98,16 +98,24 @@ jobs:
           except: 
             final_m3u_file = "output/result.m3u"
           print(final_m3u_file)')
+          if [[ -f "config/mydemo.txt" ]]; then
+            rm -f config/mydemo.txt
+            git add -f "config/mydemo.txt"
+          fi
           if [[ -f "$final_file" ]]; then
+            rm -f "$final_file"
             git add -f "$final_file"
           fi
           if [[ -f "$final_m3u_file" ]]; then
+            rm -f "$final_m3u_file"
             git add -f "$final_m3u_file"
           fi
           if [[ -f "output/cache.pkl" ]]; then
+            rm -f output/cache.pkl
             git add -f "output/cache.pkl"
           fi
           if [[ -f "output/sort.log" ]]; then
+            rm -f output/sort.log
             git add -f "output/sort.log"
           fi
           if [[ -f "updates/fofa/fofa_hotel_region_result.pkl" ]]; then
@@ -117,8 +125,6 @@ jobs:
             git add -f "updates/fofa/fofa_multicast_region_result.pkl"
           fi
           if ! git diff --staged --quiet; then
-            rm -f config/mydemo.txt
-            rm -rf output/*
             git commit -m "Github Action Auto Updated"
             git push --force
           fi
