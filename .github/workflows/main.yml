@@ -57,6 +57,15 @@ jobs:
         run: pipenv install selenium
       - name: Update
         run: pipenv run dev
+      - name: Download file from FTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          mkdir -p config
+          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/mydemo.txt -o config/mydemo.txt
       - name: Commit and push if changed
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -112,3 +121,8 @@ jobs:
           exclude: |
             *.pkl
             *.log
+      - name: Delete specified files
+        run: |
+          rm -f config/mydemo.txt
+          rm -f output/tv.txt
+          rm -f output/tv.m3u
