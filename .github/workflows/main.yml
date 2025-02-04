@@ -98,10 +98,6 @@ jobs:
           except: 
             final_m3u_file = "output/result.m3u"
           print(final_m3u_file)')
-          if [[ -f "config/mydemo.txt" ]]; then
-            rm -f config/mydemo.txt
-            git add -f "config/mydemo.txt"
-          fi
           if [[ -f "$final_file" ]]; then
             rm -f "$final_file"
             git add -f "$final_file"
