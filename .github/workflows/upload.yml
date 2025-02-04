@@ -28,7 +28,18 @@ jobs:
           rm -f config/mydemo.txt
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git rm -f output/tv.txt
-          git rm -f output/tv.m3u
-          git commit -m "Delete file"
-          git push
+          deleted=false
+          if [ -f output/tv.txt ]; then
+            git rm output/tv.txt
+            deleted=true
+          fi
+          if [ -f output/tv.m3u ]; then
+            git rm output/tv.m3u
+            deleted=true
+          fi
+          if [ "$deleted" = true ]; then
+            git commit -m "Delete file"
+            git push
+          else
+            echo "No files to delete, skipping commit."
+          fi
