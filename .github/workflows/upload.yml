@@ -29,6 +29,6 @@ jobs:
           rm -rf output/*
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git add output
+          git rm output
           git commit -m "Delete file"
           git push
