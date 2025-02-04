@@ -65,6 +65,25 @@ jobs:
           curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/mydemo.txt -o config/mydemo.txt
       - name: Update
         run: pipenv run dev
+      - name: Upload to FTPServer
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./output/
+          server-dir: /
+          exclude: |
+            *.pkl
+            *.log
+      - name: Delete specified files
+        run: |
+          rm -f config/mydemo.txt
+          rm -f output/tv.txt
+          rm -f output/tv.m3u
+          rm -f output/cache.pkl
+          rm -f output/sort.log
       - name: Commit and push if changed
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -108,20 +127,3 @@ jobs:
             git commit -m "Github Action Auto Updated"
             git push --force
           fi
-      - name: Upload to FTPServer
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          port: ${{ secrets.FTP_PORT }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./output/
-          server-dir: /
-          exclude: |
-            *.pkl
-            *.log
-      - name: Delete specified files
-        run: |
-          rm -f config/mydemo.txt
-          rm -f output/tv.txt
-          rm -f output/tv.m3u
