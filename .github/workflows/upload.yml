@@ -25,10 +25,23 @@ jobs:
             *.log
       - name: Delete specified files
         run: |
-          ls -ls
-          rm -f ./config/mydemo.txt
-          cd ./output
-          ls -ls
-          rm -f ./output/tv.txt
-          rm -f ./output/tv.m3u
-          ls -ls
+          if [ -f config/mydemo.txt ]; then
+            rm -f config/mydemo.txt
+            echo "Deleted config/mydemo.txt"
+          else
+            echo "config/mydemo.txt does not exist"
+          fi
+
+          if [ -f output/tv.txt ]; then
+            rm -f output/tv.txt
+            echo "Deleted output/tv.txt"
+          else
+            echo "output/tv.txt does not exist"
+          fi
+
+          if [ -f output/tv.m3u ]; then
+            rm -f output/tv.m3u
+            echo "Deleted output/tv.m3u"
+          else
+            echo "output/tv.m3u does not exist"
+          fi
