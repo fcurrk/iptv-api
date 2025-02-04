@@ -26,10 +26,7 @@ jobs:
       - name: Commit and push if changed
         run: |
           rm -f config/mydemo.txt
-          rm -f output/tv.txt
-          rm -f output/tv.m3u
-          rm -f output/cache.pkl
-          rm -f output/sort.log
+          rm -f output/*
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
           git add .

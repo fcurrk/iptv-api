@@ -77,13 +77,6 @@ jobs:
           exclude: |
             *.pkl
             *.log
-      - name: Delete specified files
-        run: |
-          rm -f config/mydemo.txt
-          rm -f output/tv.txt
-          rm -f output/tv.m3u
-          rm -f output/cache.pkl
-          rm -f output/sort.log
       - name: Commit and push if changed
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -124,6 +117,8 @@ jobs:
             git add -f "updates/fofa/fofa_multicast_region_result.pkl"
           fi
           if ! git diff --staged --quiet; then
+            rm -f config/mydemo.txt
+            rm -rf output/*
             git commit -m "Github Action Auto Updated"
             git push --force
           fi
