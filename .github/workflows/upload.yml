@@ -23,7 +23,14 @@ jobs:
           exclude: |
             *.pkl
             *.log
-      - name: Delete specified files
+      - name: List current directory
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Contents of the output directory:"
+          ls -la output
+
+      - name: Check and delete specified files
         run: |
           if [ -f config/mydemo.txt ]; then
             rm -f config/mydemo.txt
@@ -45,3 +52,8 @@ jobs:
           else
             echo "output/tv.m3u does not exist"
           fi
+
+      - name: List output directory after deletion
+        run: |
+          echo "Contents of the output directory after deletion:"
+          ls -la output
