@@ -99,20 +99,16 @@ jobs:
             final_m3u_file = "output/result.m3u"
           print(final_m3u_file)')
           if [[ -f "$final_file" ]]; then
-            rm -f "$final_file"
-            git rm -f "$final_file"
+            git rm "$final_file"
           fi
           if [[ -f "$final_m3u_file" ]]; then
-            rm -f "$final_m3u_file"
-            git rm -f "$final_m3u_file"
+            git rm "$final_m3u_file"
           fi
           if [[ -f "output/cache.pkl" ]]; then
-            rm -f output/cache.pkl
-            git rm -f "output/cache.pkl"
+            git rm "output/cache.pkl"
           fi
           if [[ -f "output/sort.log" ]]; then
-            rm -f output/sort.log
-            git rm -f "output/sort.log"
+            git rm "output/sort.log"
           fi
           if [[ -f "updates/fofa/fofa_hotel_region_result.pkl" ]]; then
             git add -f "updates/fofa/fofa_hotel_region_result.pkl"
