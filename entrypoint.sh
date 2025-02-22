@@ -12,9 +12,11 @@ done
 
 crontab -d
 
-if [ -n "$UPDATE_CRON" ]; then
-  (crontab -l ; echo "$UPDATE_CRON cd $APP_WORKDIR && /.venv/bin/python main.py") | crontab -
-fi
+for cron_value in "$UPDATE_CRON1" "$UPDATE_CRON2"; do
+  if [ -n "$cron_value" ]; then
+    (crontab -l ; echo "$cron_value cd $APP_WORKDIR && /.venv/bin/python main.py") | crontab -
+  fi
+done
 
 # dcron log level
 # LOG_EMERG	0	[* system is unusable *]
