@@ -2,7 +2,7 @@ name: 'Update schedule'
 
 on:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 22,10 * * *'
   workflow_dispatch:
     branches:
       - master
@@ -55,26 +55,14 @@ jobs:
       - name: Install selenium
         if: env.OPEN_DRIVER == 'True'
         run: pipenv install selenium
-      - name: Download file from FTP
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_PORT: ${{ secrets.FTP_PORT }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/mydemo.txt -o config/mydemo.txt
       - name: Update
         run: pipenv run dev
-      - name: Upload to FTPServer
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          port: ${{ secrets.FTP_PORT }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./output/
-          server-dir: /
-          exclude: |
-            *.pkl
-            *.log
-            readme
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "Github Action Auto Updated"
+            git push --force
+          fi
