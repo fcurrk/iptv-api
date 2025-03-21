@@ -156,12 +156,14 @@ class UpdateSource:
                 self.total = 12
                 self.pbar = tqdm(total=self.total, desc="Writing")
                 self.start_time = time()
-                write_channel_to_file(
-                    self.channel_data,
-                    ipv6=ipv6_support,
-                    first_channel_name=channel_names[0],
-                    callback=lambda: self.pbar_update(name="写入结果", item_name="文件"),
-                )
+                output_channel = config.output_channel
+                if output_channel:
+                    write_channel_to_file(
+                        self.channel_data,
+                        ipv6=ipv6_support,
+                        first_channel_name=channel_names[0],
+                        callback=lambda: self.pbar_update(name="写入结果", item_name="文件"),
+                    )
                 self.pbar.close()
                 if config.open_history:
                     if open_sort:

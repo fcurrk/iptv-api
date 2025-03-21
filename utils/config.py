@@ -253,6 +253,10 @@ class ConfigManager:
         return self.config.getboolean("Settings", "open_sort", fallback=True)
 
     @property
+    def output_channel(self):
+        return self.config.getboolean("Settings", "output_channel", fallback=True)
+		
+    @property
     def open_update_time(self):
         return self.config.getboolean("Settings", "open_update_time", fallback=True)
 
