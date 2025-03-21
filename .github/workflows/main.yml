@@ -78,3 +78,7 @@ jobs:
             *.pkl
             *.log
             readme
+            ipv4/
+            ipv6/
+            data/
+            log/
