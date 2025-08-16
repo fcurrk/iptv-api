@@ -85,3 +85,24 @@ jobs:
             ipv6/**
             data/**
             log/**
+      - name: Upload to FTPServer2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER2 }}
+          port: ${{ secrets.FTP_PORT2 }}
+          username: ${{ secrets.FTP_USERNAME2 }}
+          password: ${{ secrets.FTP_PASSWORD2 }}
+          local-dir: ./output/
+          server-dir: /
+          exclude: |
+            *.pkl
+            *.log
+            readme
+            ipv4/
+            ipv6/
+            data/
+            log/
+            ipv4/**
+            ipv6/**
+            data/**
+            log/**
