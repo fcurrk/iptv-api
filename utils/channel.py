@@ -1,4 +1,5 @@
 import asyncio
+import requests
 import base64
 import gzip
 import json
@@ -871,15 +872,17 @@ def process_write_content(
              if (urls := get_total_urls(info_list, ipv_type_prefer, origin_type_prefer, rtmp_type))),
             {"id": "id", "url": "url"}
         )
+        ua_url = "https://raw.githubusercontent.com/mursor1985/LIVE/refs/heads/main/iptv.m3u"
+        ua_hint_content = extract_ua_hint_content(ua_url)
         now = get_datetime_now()
         update_time_item_url = update_time_item["url"]
         if open_url_info and update_time_item["extra_info"]:
             update_time_item_url = add_url_info(update_time_item_url, update_time_item["extra_info"])
         value = f"{rtmp_url}{update_time_item["id"]}" if rtmp_url else update_time_item_url
         if config.update_time_position == "top":
-            content = f"🕘️更新时间,#genre#\n{now},{value}\n\n{content}"
+            content = f"🕘️更新时间,#genre#\n{now},{value}\n\n{content}\n\n{ua_hint_content}"
         else:
-            content += f"\n\n🕘️更新时间,#genre#\n{now},{value}"
+            content += f"\n\n🕘️更新时间,#genre#\n{now},{value}\n\n{ua_hint_content}"
     if rtmp_url:
         conn = get_db_connection(constants.rtmp_data_path)
         try:
@@ -1048,3 +1051,22 @@ def get_channel_data_cache_with_compare(data, new_data):
                             "ipv_type": info["ipv_type"]
                         })
                 data[cate][name] = updated_data
+
+def extract_ua_hint_content(url):
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        m3u_content = response.text
+    except requests.exceptions.RequestException as e:
+        print(f"ua设置-请求M3U文件时出错: {e}")
+        return None
+    except Exception as e:
+        print(f"ua设置-其他错误: {e}")
+        return None
+
+
+    match = re.search(r"#UA-Hint:\s*(.*?)\s*#EXTINF:", m3u_content, re.IGNORECASE | re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    else:
+        return None
