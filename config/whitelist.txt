@@ -4,3 +4,4 @@
 # Filling in the channel name will directly retain the record to the final result, such as: CCTV-1,url, only fill in the interface address will be effective for all channels, multiple records newline input.
 mursor.ottiptv.cc
 wapx.cmvideo.cn
+mgtv.ottiptv.cc
