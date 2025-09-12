@@ -64,6 +64,7 @@ jobs:
           curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/mydemo.txt -o config/mydemo.txt
           curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/subscribe.txt -o config/subscribe.txt
           curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/whitelist.txt -o config/whitelist.txt
+          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/alias.txt -o config/alias.txt
       - name: Update
         run: pipenv run dev
       - name: Upload to FTPServer
