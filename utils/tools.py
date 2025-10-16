@@ -335,9 +335,13 @@ def get_epg_url():
     Get the epg result url
     """
     if os.getenv("GITHUB_ACTIONS"):
-        repository = os.getenv("GITHUB_REPOSITORY", "Guovin/iptv-api")
-        ref = os.getenv("GITHUB_REF", "gd")
-        return join_url(config.cdn_url, f"https://raw.githubusercontent.com/{repository}/{ref}/output/epg/epg.gz")
+        user_open_epg = config.open_epg
+        if user_open_epg:
+            repository = os.getenv("GITHUB_REPOSITORY", "Guovin/iptv-api")
+            ref = os.getenv("GITHUB_REF", "gd")
+            return join_url(config.cdn_url, f"https://raw.githubusercontent.com/{repository}/{ref}/output/epg/epg.gz")
+        else:
+            return join_url(config.cdn_url, f"https://raw.githubusercontent.com/Guovin/iptv-api/refs/heads/gd/output/epg/epg.gz")
     else:
         return f"{get_ip_address()}/epg/epg.gz"
 
