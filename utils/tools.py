@@ -335,13 +335,9 @@ def get_epg_url():
     Get the epg result url
     """
     if os.getenv("GITHUB_ACTIONS"):
-        user_open_epg = config.open_epg
-        if user_open_epg:
-            repository = os.getenv("GITHUB_REPOSITORY", "Guovin/iptv-api")
-            ref = os.getenv("GITHUB_REF", "gd")
-            return join_url(config.cdn_url, f"https://raw.githubusercontent.com/{repository}/{ref}/output/epg/epg.gz")
-        else:
-            return join_url(config.cdn_url, f"https://raw.githubusercontent.com/Guovin/iptv-api/refs/heads/gd/output/epg/epg.gz")
+        repository = os.getenv("GITHUB_REPOSITORY", "Guovin/iptv-api")
+        ref = os.getenv("GITHUB_REF", "gd")
+        return join_url(config.cdn_url, f"https://raw.githubusercontent.com/{repository}/{ref}/output/epg/epg.gz")
     else:
         return f"{get_ip_address()}/epg/epg.gz"
 
@@ -354,6 +350,8 @@ def convert_to_m3u(path=None, first_channel_name=None, data=None):
         with open(path, "r", encoding="utf-8") as file:
             m3u_output = f'#EXTM3U x-tvg-url="{get_epg_url()}"\n'
             current_group = None
+            logo_url = join_url(config.cdn_url,
+                                config.logo_url) if "raw.githubusercontent.com" in config.logo_url else config.logo_url
             for line in file:
                 trimmed_line = line.strip()
                 if trimmed_line != "":
@@ -372,7 +370,7 @@ def convert_to_m3u(path=None, first_channel_name=None, data=None):
                                       + ("+" if m.group(3) else ""),
                             first_channel_name if current_group == "🕘️更新时间" else original_channel_name,
                         )
-                        m3u_output += f'#EXTINF:-1 tvg-name="{processed_channel_name}" tvg-logo="{join_url(config.cdn_url, f'https://raw.githubusercontent.com/fcurrk/iptv-api/master/tvpng/{processed_channel_name}.png')}"'
+                        m3u_output += f'#EXTINF:-1 tvg-name="{processed_channel_name}" tvg-logo="{join_url(logo_url, f'{processed_channel_name}.{config.logo_type}')}"'
                         if current_group:
                             m3u_output += f' group-title="{current_group}"'
                         item_data = {}
