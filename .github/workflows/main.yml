@@ -67,28 +67,6 @@ jobs:
           curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/alias.txt -o config/alias.txt
       - name: Update
         run: pipenv run dev
-      - name: Upload to FTPServer2
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER2 }}
-          port: ${{ secrets.FTP_PORT2 }}
-          username: ${{ secrets.FTP_USERNAME2 }}
-          password: ${{ secrets.FTP_PASSWORD2 }}
-          local-dir: ./output/
-          server-dir: /
-          exclude: |
-            *.pkl
-            *.log
-            readme
-            epg/
-            ipv4/
-            ipv6/
-            data/
-            log/
-            ipv4/**
-            ipv6/**
-            data/**
-            log/**
       - name: Upload to FTPServer
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
