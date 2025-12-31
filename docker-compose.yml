@@ -1,6 +1,6 @@
 services:
   iptv-api:
-    image: guovern/iptv-api:latest
+    image: fcurrk/iptv-api:latest
     container_name: iptv-api
     restart: unless-stopped
 
@@ -17,4 +17,4 @@ services:
       PUBLIC_DOMAIN: "127.0.0.1"
       PUBLIC_PORT: "80"
       NGINX_HTTP_PORT: "8080"
-      CDN_URL: ""
+      CDN_URL: "https://gh.beta.gs/"
