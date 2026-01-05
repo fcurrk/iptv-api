@@ -3,6 +3,7 @@ import base64
 import gzip
 import json
 import logging
+import requests
 import math
 import os
 import pickle
