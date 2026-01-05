@@ -922,19 +922,19 @@ def process_write_content(
              if (urls := get_total_urls(info_list, ipv_type_prefer, origin_type_prefer, rtmp_type))),
             {"id": "id", "url": "url"}
         )
-#        ua_url = "https://raw.githubusercontent.com/mursor1985/LIVE/refs/heads/main/iptv.m3u"
-#        ua_hint_content = extract_ua_hint_content(ua_url)
+        ua_url = "https://raw.githubusercontent.com/fcurrk/iptv-api/refs/heads/master/tvpng/ua.m3u"
+        ua_hint_content = extract_ua_hint_content(ua_url)
         now = get_datetime_now()
         update_time_item_url = update_time_item["url"]
         if open_url_info and update_time_item["extra_info"]:
             update_time_item_url = add_url_info(update_time_item_url, update_time_item["extra_info"])
         value = f"{hls_url}/{update_time_item["id"]}.m3u8" if hls_url else update_time_item_url
         if config.update_time_position == "top":
-#            content = f"{t("content.update_time")},#genre#\n{now},{value}\n\n{content}\n\n{ua_hint_content}"
-            content = f"{t("content.update_time")},#genre#\n{now},{value}\n\n{content}"
+            content = f"{t("content.update_time")},#genre#\n{now},{value}\n\n{content}\n\n{ua_hint_content}"
+#            content = f"{t("content.update_time")},#genre#\n{now},{value}\n\n{content}"
         else:
-#            content += f"\n\n{t("content.update_time")},#genre#\n{now},{value}\n\n{ua_hint_content}"
-            content += f"\n\n{t("content.update_time")},#genre#\n{now},{value}"
+            content += f"\n\n{t("content.update_time")},#genre#\n{now},{value}\n\n{ua_hint_content}"
+#            content += f"\n\n{t("content.update_time")},#genre#\n{now},{value}"
     if hls_url:
         conn = get_db_connection(constants.rtmp_data_path)
         try:
