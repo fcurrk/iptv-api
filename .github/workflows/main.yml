@@ -33,14 +33,38 @@ jobs:
         run: pip3 install --user pipenv
       - name: Install dependecies
         run: pipenv --python 3.13 && pipenv install --deploy
+      - name: Download file from FTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/mydemo.txt -o config/mydemo.txt
+          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/subscribe.txt -o config/subscribe.txt
+          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/whitelist.txt -o config/whitelist.txt
+          curl -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER:$FTP_PORT/alias.txt -o config/alias.txt
       - name: Update
         run: pipenv run dev
-      - name: Commit and push if changed
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          if ! git diff --staged --quiet; then
-            git commit -m "Github Action Auto Updated"
-            git push --force
-          fi
+      - name: Upload to FTPServer
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./output/
+          server-dir: /
+          exclude: |
+            *.pkl
+            *.log
+            readme
+            epg/
+            ipv4/
+            ipv6/
+            data/
+            log/
+            ipv4/**
+            ipv6/**
+            data/**
+            log/**

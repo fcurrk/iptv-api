@@ -63,6 +63,8 @@
   "msg.name_no_results_refresh_retrying": "{name}: No results found, refreshing and retrying...",
   "msg.name_no_elements_refresh_retrying": "{name}: No elements found, refreshing and retrying...",
   "msg.reach_retry_limit_jump_next": "{name}: reached retry limit, jumping to next page",
+  "msg.ua_set_error_m3u": "UA setting - Error occurred when requesting M3U file:",
+  "msg.ua_set_error": "UA setting - other error:",
   "pbar.progressing": "Progressing",
   "pbar.speed_test": "Speed test",
   "pbar.get": "Get",
