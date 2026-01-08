@@ -668,10 +668,10 @@ def process_write_content(
             update_time_item_url = add_url_info(update_time_item_url, update_time_item["extra_info"])
         value = f"{hls_url}/{update_time_item["id"]}.m3u8" if hls_url else update_time_item_url
         if config.update_time_position == "top":
-            content = f"{t("update_title")},#genre#\n{now},{value}\n\n{content}\n\n{ua_hint_content}"
+            content = f"{update_title},#genre#\n{now},{value}\n\n{content}\n\n{ua_hint_content}"
 #            content = f"{update_title},#genre#\n{now},{value}\n\n{content}"
         else:
-            content += f"\n\n{t("update_title")},#genre#\n{now},{value}\n\n{ua_hint_content}"
+            content += f"\n\n{update_title},#genre#\n{now},{value}\n\n{ua_hint_content}"
 #            content += f"\n\n{update_title},#genre#\n{now},{value}"
     if hls_url:
         db_dir = os.path.dirname(constants.rtmp_data_path)
