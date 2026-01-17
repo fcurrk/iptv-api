@@ -1,8 +1,7 @@
 name: Validate PRs and close invalid ones
 
 on:
-  pull_request_target:
-    types: [ opened, edited, reopened, synchronize ]
+  workflow_dispatch:
 
 permissions:
   contents: read
