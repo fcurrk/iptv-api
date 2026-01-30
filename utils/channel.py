@@ -687,7 +687,7 @@ def process_write_content(
              if (urls := get_total_urls(info_list, ipv_type_prefer, origin_type_prefer, rtmp_type))),
             {"id": "id", "url": "url"}
         )
-        ua_url = "https://raw.githubusercontent.com/fcurrk/iptv-api/refs/heads/master/tvpng/ua.m3u"
+        ua_url = "https://raw.githubusercontent.com/fcurrk/iptv-api/refs/heads/master/config/logo/ua.m3u"
         ua_hint_content = extract_ua_hint_content(ua_url)
         now = get_datetime_now()
         update_time_item_url = update_time_item["url"]
