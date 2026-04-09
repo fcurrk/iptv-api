@@ -2,7 +2,6 @@ import asyncio
 import gzip
 import hashlib
 import json
-import requests
 import math
 import os
 import pickle
@@ -1041,8 +1040,6 @@ def process_write_content(
             ))),
             {"id": "id", "url": "url"}
         )
-        ua_url = "https://raw.githubusercontent.com/fcurrk/iptv-api/refs/heads/master/config/logo/ua.m3u"
-        ua_hint_content = extract_ua_hint_content(ua_url)
         now = get_datetime_now()
         update_time_item_url = update_time_item["url"]
         update_title = t("content.update_time") if is_last else t("content.update_running")
@@ -1050,11 +1047,9 @@ def process_write_content(
             update_time_item_url = add_url_info(update_time_item_url, update_time_item["extra_info"])
         value = f"{hls_url}/{update_time_item["id"]}.m3u8" if hls_url else update_time_item_url
         if config.update_time_position == "top":
-            content = f"{update_title},#genre#\n{now},{value}\n\n{content}\n\n{ua_hint_content}"
-#            content = f"{update_title},#genre#\n{now},{value}\n\n{content}"
+            content = f"{update_title},#genre#\n{now},{value}\n\n{content}"
         else:
-            content += f"\n\n{update_title},#genre#\n{now},{value}\n\n{ua_hint_content}"
-#            content += f"\n\n{update_title},#genre#\n{now},{value}"
+            content += f"\n\n{update_title},#genre#\n{now},{value}"
     if hls_url:
         db_dir = os.path.dirname(constants.rtmp_data_path)
         if db_dir:
@@ -1105,12 +1100,12 @@ def process_write_content(
             with open(path, "w", encoding="utf-8") as f:
                 f.write(content)
         except Exception as e:
-            print(t("msg.write_error").format(info=e))
+            print(t("msg.write_error").format(info=e), flush=True)
             return
     try:
         convert_to_m3u(path, first_channel_name, data=result_data)
     except Exception as e:
-        print(t("msg.write_error").format(info=f"convert m3u error: {e}"))
+        print(t("msg.write_error").format(info=f"convert m3u error: {e}"), flush=True)
 
 
 def write_channel_to_file(data, ipv6=False, first_channel_name=None, skip_print=False, is_last=False):
@@ -1119,7 +1114,7 @@ def write_channel_to_file(data, ipv6=False, first_channel_name=None, skip_print=
     """
     try:
         if not skip_print:
-            print(t("msg.writing_result"))
+            print(t("msg.writing_result"), flush=True)
         open_empty_category = config.open_empty_category
         ipv_type_prefer = list(config.ipv_type_prefer)
         if any(pref == "auto" for pref in ipv_type_prefer):
@@ -1161,24 +1156,6 @@ def write_channel_to_file(data, ipv6=False, first_channel_name=None, skip_print=
                 is_last=is_last
             )
         if not skip_print:
-            print(t("msg.write_success"))
+            print(t("msg.write_success"), flush=True)
     except Exception as e:
-        print(t("msg.write_error").format(info=e))
-
-def extract_ua_hint_content(url):
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        m3u_content = response.text
-    except requests.exceptions.RequestException as e:
-        print(t("msg.ua_set_error_m3u").format(info=e))
-        return None
-    except Exception as e:
-        print(t("msg.ua_set_error").format(info=e))
-        return None
-
-    match = re.search(r"#UA-Hint:\s*(.*?)\s*#EXTINF:", m3u_content, re.IGNORECASE | re.DOTALL)
-    if match:
-        return match.group(1).strip()
-    else:
-        return None
+        print(t("msg.write_error").format(info=e), flush=True)
