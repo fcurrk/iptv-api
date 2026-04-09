@@ -2,6 +2,7 @@ import asyncio
 import gzip
 import hashlib
 import json
+import requests
 import math
 import os
 import pickle
